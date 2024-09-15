@@ -1,0 +1,13 @@
+{%extends "test/base.html"%}
+
+{%block content%}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+<div class="container-sm justify-content-center align-items-center align-self-center"> 
+    <form method="post" class="from-group" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Add Student</button>
+    </form>
+</div>
+{% endblock %}

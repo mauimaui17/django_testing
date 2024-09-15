@@ -1,1 +1,87 @@
 {%extends 'test/base.html'%}
+
+{%block content%}
+    {% if student %}
+        <div class="container shadow-lg p-3 mb-5 bg-white rounded">
+            <h1>{{student.last_name}}, {{student.first_name}}</h1>
+            <hr>
+            <div class="row"> 
+                <div class="col">
+                    <b>Student ID:</b> {{student.student_id}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <b>Year Level:</b> {{student.get_grade_level_display}}
+                </div>
+            </div>
+        </div>
+        <div class="container shadow-lg p-3 mb-5 bg-white rounded">
+            <h3>Major Violations</h3>
+            {% if major %}
+
+                <!-- this should show a modal instead of going to the other page. reload page after. -->
+                <!-- <a class="btn btn-primary" href="/add-student"> Add Student</a>  -->
+                <table id="students"class="table table-striped table-bordered " style="table-layout: fixed;" cellspacing="0" cellpadding="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center" rowspan="2"> Title </th>
+                            <!-- <th class="text-center" rowspan="2"> First Name</th> -->
+                            <th class="text-center" rowspan="2"> Category </th>
+                            <th class="text-center" rowspan="2"> Offense Count </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for violation in major%}
+                            <tr data-id ="{{ violation.id }}">
+                                <td class="text-center"> {{violation.title}} </td>
+                                <td class="text-center"> {{violation.category}}</td>
+                                <td class="text-center"> {{violation.offense_count}}</td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            {%else%}
+                 <div class="container d-flex flex-column justify-content-center align-items-center align-self-center">
+                    <h1 class="align-self-center"> No Major Violations</h1>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentModal">
+                        Add Major Violation
+                    </button>
+                </div> 
+            {%endif%}
+        </div>
+        <div class="container shadow-lg p-3 mb-5 bg-white rounded">
+            <h3>Minor Violations</h3>
+            {% if minor %}
+                <!-- this should show a modal instead of going to the other page. reload page after. -->
+                <!-- <a class="btn btn-primary" href="/add-student"> Add Student</a>  -->
+                <table id="students"class="table table-striped table-bordered " style="table-layout: fixed;" cellspacing="0" cellpadding="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center" rowspan="2"> Title </th>
+                            <!-- <th class="text-center" rowspan="2"> First Name</th> -->
+                            <th class="text-center" rowspan="2"> Category </th>
+                            <th class="text-center" rowspan="2"> Offense Count </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for violation in minor%}
+                            <tr data-id ="{{ violation.id }}">
+                                <td class="text-center"> {{violation.violation.title}} </td>
+                                <td class="text-center"> Category {{violation.category}}</td>
+                                <td class="text-center"> {{violation.offense_count}}</td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            {%else%}
+                 <div class="container d-flex flex-column justify-content-center align-items-center align-self-center">
+                    <h1 class="align-self-center"> No Minor Violations</h1>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentModal">
+                        Add Minor Violation
+                    </button>
+                </div> 
+            {%endif%}
+        </div>
+    {% endif %}
+{%endblock%}

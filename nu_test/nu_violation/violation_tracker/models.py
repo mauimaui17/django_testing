@@ -39,7 +39,7 @@ class Student(models.Model):
                 code="invalid_student_id"
             )
         ],
-        blank=True
+        blank=False
     )
     enrollment_year = models.IntegerField(
         validators=[
@@ -59,7 +59,7 @@ class Student(models.Model):
     grade_level = models.CharField(
         max_length=200, 
         choices=GRADE_LEVEL_CHOICES, 
-        blank=True 
+        blank=False
     )
     
     def __str__(self):
@@ -68,6 +68,10 @@ class Student(models.Model):
         return self.violations.all().filter(violation__violation_class="Minor").count()
     def get_major_count(self):
         return self.violations.all().filter(violation__violation_class="Major").count()
+    def get_minor_violations(self):
+        return self.violations.all().filter(violation__violation_class="Minor")
+    def get_major_violations(self):
+        return self.violations.all().filter(violation__violation_class="Major")
 
 
 class StudentViolation(models.Model):
