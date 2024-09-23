@@ -2,6 +2,9 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from datetime import datetime
 import random
+import os
+from uuid import uuid4
+
 # Create your models here.
 
 class Violation(models.Model):
@@ -98,6 +101,20 @@ class StudentViolation(models.Model):
             MinValueValidator(1)
         ]
     )
-
+    remarks = models.CharField(blank=True)
+    status = models.BooleanField(default=False)
+    time = models.DateTimeField(blank=True, default=datetime.now())
     def __str__(self):
         return f"{self.student} - {self.violation}"
+
+def student_violation_file_path(instance, filename):
+    current_time = datetime.now()
+    formatted_time = current_time.strftime("%Y-%m-%d")
+    return os.path.join(f"violations/student_{instance.student_violation.student.student_id}/{instance.student_violation.violation.title}/{formatted_time}", filename)
+
+class StudentViolationFile(models.Model):
+    student_violation = models.ForeignKey(StudentViolation, on_delete=models.CASCADE, related_name="violation_files")
+    file = models.FileField(upload_to=student_violation_file_path)
+
+    def __str__(self):
+        return f"File for {self.student_violation}"

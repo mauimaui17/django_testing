@@ -1,12 +1,18 @@
 {%extends 'test/base.html'%}
 
 {%block content%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://cdn.datatables.net/2.1.5/js/dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css">
+    {% load crispy_forms_filters %}
+    {% load crispy_forms_tags %}
     {% if student %}
         <div class="container shadow-lg p-3 mb-5 bg-white rounded">
             <h1>{{student.last_name}}, {{student.first_name}}</h1>
             <hr>
             <div class="row"> 
-                <div class="col">
+                <div class="col-md-4">
                     <b>Student ID:</b> {{student.student_id}}
                 </div>
             </div>
@@ -17,71 +23,183 @@
             </div>
         </div>
         <div class="container shadow-lg p-3 mb-5 bg-white rounded">
-            <h3>Major Violations</h3>
             {% if major %}
+                <div class='row'>
+                    <div class='col-10'>
+                        <h3>Major Violations</h3>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentMajorViolationModal">
+                            Add Major Violation
+                        </button>
+                    </div>
+                </div>
+
 
                 <!-- this should show a modal instead of going to the other page. reload page after. -->
                 <!-- <a class="btn btn-primary" href="/add-student"> Add Student</a>  -->
-                <table id="students"class="table table-striped table-bordered " style="table-layout: fixed;" cellspacing="0" cellpadding="0" width="100%">
+                <table id="major_violations" class="table table-striped table-bordered " style="table-layout: fixed;" cellspacing="0" cellpadding="0" width="100%">
                     <thead>
                         <tr>
-                            <th class="text-center" rowspan="2"> Title </th>
-                            <!-- <th class="text-center" rowspan="2"> First Name</th> -->
-                            <th class="text-center" rowspan="2"> Category </th>
-                            <th class="text-center" rowspan="2"> Offense Count </th>
+                            <th class="text-center" rowspan="1"> Title </th>
+                            <th class="text-center" rowspan="1"> Intervention Level </th>
+                            <th class="text-center" rowspan="1"> Offense Count </th>
+                            <th class="text-center" rowspan="1"> Remarks </th>
+                            <th class="text-center" rowspan="1"> Timestamp </th>
+                            <th class="text-center" rowspan="1"> Action </th>
+
                         </tr>
                     </thead>
                     <tbody>
                         {%for violation in major%}
                             <tr data-id ="{{ violation.id }}">
-                                <td class="text-center"> {{violation.title}} </td>
-                                <td class="text-center"> {{violation.category}}</td>
+                                <td class="text-center"> {{violation.violation.title}} </td>
+                                <td class="text-center"> Category {{violation.category}}</td>
                                 <td class="text-center"> {{violation.offense_count}}</td>
+                                <td class="text-center"> {{violation.remarks}}</td>
+                                <td class="text-center"> {{violation.time}}</td>
+                                <td class="text-center"> {{violation.time}}</td>
+
                             </tr>
                         {%endfor%}
                     </tbody>
                 </table>
+                <script>
+                    $(document).ready(function() {
+                        if ($('#major_violations').length) {
+                            $('#major_violations').DataTable({
+                                responsive: true,
+                                paging: true,
+                                searching: true,
+                                ordering: true
+                            });
+                        }
+                    });
+                </script>
             {%else%}
+                <h3>Major Violations</h3>
                  <div class="container d-flex flex-column justify-content-center align-items-center align-self-center">
                     <h1 class="align-self-center"> No Major Violations</h1>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentModal">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentMajorViolationModal">
                         Add Major Violation
                     </button>
                 </div> 
             {%endif%}
         </div>
         <div class="container shadow-lg p-3 mb-5 bg-white rounded">
-            <h3>Minor Violations</h3>
             {% if minor %}
+                <div class='row'>
+                    <div class='col-10'>
+                        <h3>Minor Violations</h3>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentMinorViolationModal">
+                            Add Minor Violation
+                        </button>
+                    </div>
+                </div>
                 <!-- this should show a modal instead of going to the other page. reload page after. -->
                 <!-- <a class="btn btn-primary" href="/add-student"> Add Student</a>  -->
-                <table id="students"class="table table-striped table-bordered " style="table-layout: fixed;" cellspacing="0" cellpadding="0" width="100%">
+                <table id="minor_violations"class="table table-striped table-bordered " style="table-layout: fixed;" cellspacing="0" cellpadding="0" width="100%">
                     <thead>
                         <tr>
-                            <th class="text-center" rowspan="2"> Title </th>
-                            <!-- <th class="text-center" rowspan="2"> First Name</th> -->
-                            <th class="text-center" rowspan="2"> Category </th>
-                            <th class="text-center" rowspan="2"> Offense Count </th>
+                            <th class="text-center" rowspan="1"> Title </th>
+                            <th class="text-center" rowspan="1"> Intervention Level </th>
+                            <th class="text-center" rowspan="1"> Offense Count </th>
+                            <th class="text-center" rowspan="1"> Remarks </th>
+                            <th class="text-center" rowspan="1"> Timestamp </th>
+                            <th class="text-center" rowspan="1"> Action </th>
+                            
                         </tr>
                     </thead>
                     <tbody>
                         {%for violation in minor%}
                             <tr data-id ="{{ violation.id }}">
                                 <td class="text-center"> {{violation.violation.title}} </td>
-                                <td class="text-center"> Category {{violation.category}}</td>
+                                <td class="text-center"> Level {{violation.category}}</td>
                                 <td class="text-center"> {{violation.offense_count}}</td>
+                                <td class="text-center"> {{violation.remarks}}</td>
+                                <td class="text-center"> {{violation.time}}</td>
                             </tr>
                         {%endfor%}
                     </tbody>
                 </table>
+                <script>
+                    $(document).ready(function() {
+                        if ($('#minor_violations').length) {
+                            $('#minor_violations').DataTable({
+                                responsive: true,
+                                paging: true,
+                                searching: true,
+                                ordering: true
+                            });
+                        }
+                    });
+                </script>
             {%else%}
+                <h3>Minor Violations</h3>
                  <div class="container d-flex flex-column justify-content-center align-items-center align-self-center">
                     <h1 class="align-self-center"> No Minor Violations</h1>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentModal">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentMinorViolationModal">
                         Add Minor Violation
                     </button>
                 </div> 
             {%endif%}
         </div>
     {% endif %}
+
+    {% comment %} add the modal here {% endcomment %}
+    <!-- MODAL PART -->
+    <div class="modal fade" id="addStudentMajorViolationModal" tabindex="-1" role="dialog" aria-labelledby="addStudentMajorViolationModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addStudentMajorViolationModalTitle"> Add Major Violation Record </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/add-student-violation/" method="post" class="from-group" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="student_id" value={{student.id}}>
+                        {{ major_form|crispy }}
+                        <input type="file" name="files" multiple>  <!-- Enable multiple file upload -->
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add Violation Record</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addStudentMinorViolationModal" tabindex="-1" role="dialog" aria-labelledby="addStudentMinorViolationModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addStudentMinorViolationModalTitle"> Add Minor Violation Record </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/add-student-violation/" method="post" class="from-group" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="student_id" value={{student.id}}>
+                        {{ minor_form|crispy }}
+                        <input type="file" name="files" multiple>  <!-- Enable multiple file upload -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add Violation Record</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% comment %} set the scripts here {% endcomment %}
+
 {%endblock%}

@@ -5,19 +5,7 @@
 {% load crispy_forms_tags %}
 
 <div class="container">
-    {% if messages %}
-        {% for message in messages %}
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                <div class="alert alert-danger" role="alert">
-                    {{ message|striptags }}
-                </div>
-            {%else%}
-                <div class="alert alert-success" role="alert">
-                    {{ message|striptags }}
-                </div>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+
     <!-- Display All Students -->
     {% if has_students%}
         <h1> Students </h1>

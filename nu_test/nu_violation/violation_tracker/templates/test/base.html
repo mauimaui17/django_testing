@@ -8,9 +8,9 @@
   {% bootstrap_javascript %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.datatables.net/2.1.5/js/dataTables.min.js"></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css">
 
-  <script src="https://cdn.datatables.net/2.1.5/js/dataTables.min.js"></script>
 </head>
 <body>
 <nav class="p-3 navbar-dark sticky-top" style="background-color: #35408e">
@@ -37,8 +37,21 @@
   </div>
 </nav>
 <div class="container-fluid mx-auto p-3">
+    {% if messages %}
+    {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert alert-danger" role="alert">
+                {{ message|striptags }}
+            </div>
+        {%else%}
+            <div class="alert alert-success" role="alert">
+                {{ message|striptags }}
+            </div>
+        {% endif %}
+    {% endfor %}
+  {% endif %}
   {% block content %}
   {% endblock %}
-<container>
+</div>
 </body>
 </html>
