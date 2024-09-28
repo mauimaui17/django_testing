@@ -154,6 +154,8 @@ def add_violation(request):
                 messages.add_message(request, messages.ERROR, "%s: %s" %(error, form.errors[error]))
             return HttpResponseRedirect('/violations/')
         if form.is_valid(): 
-            record = form.save()
-        messages.add_message(request, messages.SUCCESS, "Added a violation record.")
-        return HttpResponseRedirect('/violations/')
+            record = form.save(commit=False)
+            record.violation_class = request.POST.get('violation_class')  # Set the class from hidden input
+            record.save()
+            messages.add_message(request, messages.SUCCESS, "Added a violation record.")
+            return HttpResponseRedirect('/violations/')

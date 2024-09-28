@@ -37,12 +37,7 @@ class ViolationForm(forms.ModelForm):
         model = Violation
         fields = [
             "title",
-            "violation_class"
         ]
         labels = {
             "title": "Violation Title",
-            "violation_class": "Major/Minor"
-        }
-        widgets = {
-            "violation_class": forms.HiddenInput()
         }
