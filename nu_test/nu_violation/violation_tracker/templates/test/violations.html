@@ -1,6 +1,8 @@
 {%extends 'test/base.html'%}
 
 {% block content %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 <h1> Violation Directory </h1>
 <div class="container shadow-lg p-3 mb-5 bg-white rounded">
     {% if major %}
