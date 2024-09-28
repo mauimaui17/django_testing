@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, HttpResponse
 from .models import Student, Violation, StudentViolation
-from .forms import StudentForm, StudentViolationForm, StudentViolationFile
+from .forms import StudentForm, StudentViolationForm, StudentViolationFile, ViolationForm
 from django.contrib import messages
 from datetime import datetime
 from io import BytesIO
@@ -135,3 +135,25 @@ def download_violation_files(request):
     else: 
         messages.add_message(request, messages.ERROR, "No files attached to record.")
         return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
+
+def view_violations(request):
+    major = Violation.objects.all().filter(violation_class__exact="Major")
+    minor = Violation.objects.all().filter(violation_class__exact="Minor")
+    form = ViolationForm()
+    return render(request, "test/violations.html",{
+        "major": major,
+        "minor": minor,
+        "form": form
+    })
+    
+def add_violation(request):
+    if(request.method == "POST"):
+        form = ViolationForm(request.POST)
+        if form.errors:
+            for error in form.errors:
+                messages.add_message(request, messages.ERROR, "%s: %s" %(error, form.errors[error]))
+            return HttpResponseRedirect('/violations/')
+        if form.is_valid(): 
+            record = form.save()
+        messages.add_message(request, messages.SUCCESS, "Added a violation record.")
+        return HttpResponseRedirect('/violations/')

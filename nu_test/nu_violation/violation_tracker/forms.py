@@ -31,3 +31,18 @@ class StudentViolationForm(forms.ModelForm):
             "category": "Category/Intervention",
             "status": "Resolved"
         }
+
+class ViolationForm(forms.ModelForm):
+    class Meta:
+        model = Violation
+        fields = [
+            "title",
+            "violation_class"
+        ]
+        labels = {
+            "title": "Violation Title",
+            "violation_class": "Major/Minor"
+        }
+        widgets = {
+            "violation_class": forms.HiddenInput()
+        }
