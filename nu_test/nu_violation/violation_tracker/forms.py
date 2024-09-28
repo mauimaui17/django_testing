@@ -19,11 +19,6 @@ class StudentForm(forms.ModelForm):
             "grade_level":"Grade Level"}
             
 class StudentViolationForm(forms.ModelForm):
-    # files = forms.FileField(
-    #     widget=forms.FileInput(attrs={'multiple': True}), 
-    #     required=False, 
-    #     label="Upload files"
-    # )
     class Meta:
         model = StudentViolation
         fields = [
@@ -36,15 +31,3 @@ class StudentViolationForm(forms.ModelForm):
             "category": "Category/Intervention",
             "status": "Resolved"
         }
-        
-    # def save(self, commit=True):
-    #     instance = super().save(commit=commit)
-        
-    #     # Check if any files were uploaded
-    #     files = self.files.getlist('files')
-    #     if files:
-    #         for file in files:
-    #             StudentViolationFile.objects.create(student_violation=instance, file=file)
-
-    #     return instance
-        

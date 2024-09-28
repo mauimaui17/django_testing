@@ -1,14 +1,21 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, HttpResponse
 from .models import Student, Violation, StudentViolation
 from .forms import StudentForm, StudentViolationForm, StudentViolationFile
 from django.contrib import messages
 from datetime import datetime
+from io import BytesIO
+import os
+import zipfile
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 def homepage(request):
     return render(request, "test/home.html")
 def base(request):
     return render(request, "test/base.html")
+
+@login_required
 def students(request):
     all_students = Student.objects.all()
     has_students = all_students.exists()
@@ -18,7 +25,8 @@ def students(request):
         "student_list": all_students if has_students else None,
         "form": form
     })
-
+    
+@login_required
 def add_student(request):
     if (request.method == "POST"):
         form = StudentForm(request.POST)
@@ -34,6 +42,7 @@ def add_student(request):
         form = StudentForm()        
         return render(request, 'test/add_student.html',{"form": form})
 
+@login_required
 def view_student(request):
     student_id = request.GET.get('student_id')
     try:
@@ -61,6 +70,7 @@ def view_student(request):
         }
     )
     
+@login_required
 def add_student_violation(request):
     if request.method == "POST":
         form = StudentViolationForm(request.POST)
@@ -93,3 +103,35 @@ def add_student_violation(request):
 
             messages.add_message(request, messages.SUCCESS, "Added a violation record.")
             return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
+        
+@login_required
+def download_violation_files(request):
+    # Get the StudentViolation object
+    violation_id = request.GET.get('violation_id')
+    violation = get_object_or_404(StudentViolation, id=violation_id)
+    student_id = violation.student.id
+    print(f"Student ID={violation.student.id}" )
+    violation_files = violation.violation_files.all()
+    if violation_files: 
+        # Create an in-memory ZIP file
+        zip_buffer = BytesIO()
+        
+        with zipfile.ZipFile(zip_buffer, "w") as zip_file:
+            # Get all related files
+            # Add each file to the zip
+            for violation_file in violation_files:
+                file_path = violation_file.file.path  # Full file path on disk
+                file_name = os.path.basename(file_path)  # Extract the filename
+                zip_file.write(file_path, file_name)  # Add file to the ZIP
+
+        # Set the pointer of the BytesIO object back to the start
+        zip_buffer.seek(0)
+
+        # Create an HTTP response with the appropriate headers
+        response = HttpResponse(zip_buffer, content_type='application/zip')
+        response['Content-Disposition'] = f'attachment; filename=violation_files_{violation.id}.zip'
+
+        return response
+    else: 
+        messages.add_message(request, messages.ERROR, "No files attached to record.")
+        return HttpResponseRedirect(f'/view-student/?student_id={student_id}')

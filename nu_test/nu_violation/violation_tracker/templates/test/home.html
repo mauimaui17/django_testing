@@ -1,8 +1,88 @@
 {%extends 'test/base.html'%}
 
 {%block content%}
-<div class="jumbotron">
-    <h1 class="display-4">This is the homepage. I have no idea what to put here. Probably cute card buttons for student page and stuff violations</h1>
+{%load static%}
+<div class="d-flex align-items-center justify-content-center pt-5">
+    <div class="row">
+        <div class="col">
+            <a href="/home/">
+                <div class="card border-dark mb-3 mx-auto pt-1 d-block" style="width: 15rem;">
+                    <div class="card-img-top">
+                        <img src="{% static '/home.png' %}" width="120" height="120" class="mx-auto d-block">
+                    </div>
+                    <hr>
+
+                    <div class="card-body text-dark">
+                        <h5 class="card-title">Home</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="/students/">
+                <div class="card border-dark mb-3 pt-1 mx-auto d-block" style="width: 15rem;">
+                    <div class="card-img-top">
+                        <img src="{% static '/people.png' %}" width="120" height="120" class="mx-auto d-block">
+                    </div>
+                    <hr>
+
+                    <div class="card-body text-dark">
+                        <h5 class="card-title">View Students</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="/violations/">
+                <div class="card border-dark mb-3 pt-1 mx-auto d-block" style="width: 15rem;">
+                    <div class="card-img-top">
+                        <img src="{% static '/book.png' %}" width="120" height="120" class="mx-auto d-block">
+                    </div>
+                    <hr>
+
+                    <div class="card-body text-dark">
+                        <h5 class="card-title">View Violations</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
 </div>
+{%if user.is_authenticated%}
+<div class="row">
+    <div class="col">
+        <a href="/accounts/logout/">
+            <div class="card border-dark mb-3 pt-1 mx-auto d-block" style="width: 15rem;">
+                <div class="card-img-top">
+                    <img src="{% static '/logout.png' %}" width="120" height="120" class="mx-auto d-block">
+                </div>
+                <hr>
+
+                <div class="card-body text-dark">
+                    <h5 class="card-title">Logout</h5>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+{%else%}
+<div class="row"></div>
+    <div class="col">
+        <a href="/accounts/login/">
+            <div class="card border-dark mb-3 pt-1 mx-auto d-block" style="width: 15rem;">
+                <div class="card-img-top">
+                    <img src="{% static '/login.png' %}" width="120" height="120" class="mx-auto d-block">
+                </div>
+                <hr>
+
+                <div class="card-body text-dark">
+                    <h5 class="card-title">Login</h5>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+{%endif%}
 
 {%endblock%}

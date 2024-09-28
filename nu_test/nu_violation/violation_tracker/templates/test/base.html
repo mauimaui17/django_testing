@@ -10,7 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://cdn.datatables.net/2.1.5/js/dataTables.min.js"></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.min.css">
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
 </head>
 <body>
 <nav class="p-3 navbar-dark sticky-top" style="background-color: #35408e">
@@ -18,14 +18,11 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <img src="{% static '/nu-logo.png' %}" width="45" height="55" alt="" class="ms-3">
-  <a class="navbar-brand px-1 pt-1 h1" href="/home"> Davitum </a>
+  <a class="navbar-brand px-1 pt-1 h1" href="/home"> DaviumSHC </a>
   <div class="collapse navbar-collapse" id="navbarToggleMenu">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
         <a class="nav-link" href="/home">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/base">Base</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/students">Students</a>
@@ -33,10 +30,19 @@
       <li class="nav-item">
         <a class="nav-link" href="/base">Violations</a>
       </li>
+      {%if user.is_authenticated%}
+      <li class="nav-item">
+          <a class="nav-link" href="/accounts/logout">Logout</a>
+        </li>
+      {%else%}
+      <li class="nav-item">
+        <a class="nav-link" href="/accounts/login">Login</a>
+      </li>
+      {%endif%}
     </ul>
   </div>
 </nav>
-<div class="container-fluid mx-auto p-3">
+<div class="container mx-auto p-3">
     {% if messages %}
     {% for message in messages %}
         {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
