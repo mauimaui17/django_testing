@@ -30,7 +30,7 @@
             <tbody>
                 {%for violation in major%}
                     <tr data-id ="{{ violation.id }}">
-                        <td class="text-center"> {{violation.violation.title}} </td>
+                        <td class="text-center"> {{violation.title}} </td>
                     </tr
                 {%endfor%}
             </tbody>
@@ -80,7 +80,7 @@
             <tbody>
                 {%for violation in minor%}
                     <tr data-id ="{{ violation.id }}">
-                        <td class="text-center"> {{violation.violation.title}} </td>
+                        <td class="text-center"> {{violation.title}} </td>
                     </tr>
                 {%endfor%}
             </tbody>
