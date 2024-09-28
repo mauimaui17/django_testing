@@ -124,7 +124,6 @@
                 {% csrf_token %}
                 <input type="hidden" name="violation_class" value="Major">
                 {{ form|crispy }}
-                <input type="file" name="files" multiple>  <!-- Enable multiple file upload -->
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Add Violation</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -149,7 +148,6 @@
                 {% csrf_token %}
                 <input type="hidden" name="violation_class" value="Minor">
                 {{ form|crispy }}
-                <input type="file" name="files" multiple>  <!-- Enable multiple file upload -->
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Add Violation Record</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
