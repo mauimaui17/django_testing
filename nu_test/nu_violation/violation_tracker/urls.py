@@ -12,4 +12,7 @@ urlpatterns = [
     path("get-files/", views.download_violation_files, name="get-files"),
     path("violations/", views.view_violations, name="violations"),
     path("add-violation/", views.add_violation, name="add-violation"),
+    path("toggle-pending/", views.toggle_pending, name="toggle-pending"),
+    path("edit-student-violation/", views.edit_student_violation, name="edit-student-violation"),
+    
 ]

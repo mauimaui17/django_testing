@@ -66,17 +66,23 @@
 
                                 {% endif %}
                                 <td class="text-center"> 
-                                    {% if violation.status %}
-                                        <button class="btn btn-danger">
-                                            <i class="bi bi-x-lg"></i> 
-                                        </button>
-                                    {% else %}
-                                        <button class="btn btn-primary">
-                                            <i class="bi bi-check2"></i> 
-                                        </button>
-                                    {% endif %}
-  
-                                    <button class="btn btn-primary">
+                                    <form action="/toggle-pending/" method="post" class="from-group" enctype="multipart/form-data">
+                                        {% csrf_token %}
+
+                                        <input type="hidden" name="violation_id" value="{{violation.id}}">
+                                        <input type="hidden" name="student_id" value="{{student.id}}">
+
+                                        {% if violation.status %}
+                                            <button class="btn btn-danger" type="submit">
+                                                <i class="bi bi-x-lg"></i> 
+                                            </button>
+                                        {% else %}
+                                            <button class="btn btn-primary" type="submit">
+                                                <i class="bi bi-check2"></i> 
+                                            </button>
+                                        {% endif %}
+                                    </form>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editStudentMajorViolationModal" data-violation-id="{{ violation.id }}">
                                         <i class="bi bi-pencil"></i> 
                                     </button>
                                     <a href="/get-files/?violation_id={{violation.id}}">
@@ -100,6 +106,16 @@
                                 ordering: true
                             });
                         }
+                    });
+                </script>
+                <script>
+                    // Listen for the modal being shown and set the violation ID
+                    $('#editStudentMajorViolationModal').on('show.bs.modal', function (event) {
+                        var button = $(event.relatedTarget);  // Button that triggered the modal
+                        var violationId = button.data('violation-id');  // Extract violation ID from data-* attribute
+                
+                        var modal = $(this);
+                        modal.find('#modalMajorViolationId').val(violationId);  // Set the violation ID in the hidden input field
                     });
                 </script>
             {%else%}
@@ -141,7 +157,7 @@
                     </thead>
                     <tbody>
                         {%for violation in minor%}
-                            <tr data-id ="{{ violation.id }}">
+                            <tr data-id="{{ violation.id }}" data-violation="{{ violation.violation.id }}" data-category="{{ violation.category }}" data-status="{{ violation.status }}" data-remarks="{{ violation.remarks }}">
                                 <td class="text-center"> {{violation.violation.title}} </td>
                                 <td class="text-center"> Level {{violation.category}}</td>
                                 <td class="text-center"> {{violation.offense_count}}</td>
@@ -154,17 +170,24 @@
 
                                 {% endif %}
                                 <td class="text-center"> 
-                                    {% if violation.status %}
-                                        <button class="btn btn-danger">
-                                            <i class="bi bi-x-lg"></i> 
-                                        </button>
-                                    {% else %}
-                                        <button class="btn btn-primary">
-                                            <i class="bi bi-check2"></i> 
-                                        </button>
-                                    {% endif %}
-  
-                                    <button class="btn btn-primary">
+                                    <form action="/toggle-pending/" method="post" class="from-group" enctype="multipart/form-data">
+                                        {% csrf_token %}
+
+                                        <input type="hidden" name="violation_id" value="{{violation.id}}">
+                                        <input type="hidden" name="student_id" value="{{student.id}}">
+
+
+                                        {% if violation.status %}
+                                            <button class="btn btn-danger" type="submit">
+                                                <i class="bi bi-x-lg"></i> 
+                                            </button>
+                                        {% else %}
+                                            <button class="btn btn-primary" type="submit">
+                                                <i class="bi bi-check2"></i> 
+                                            </button>
+                                        {% endif %}
+                                    </form>
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editStudentMinorViolationModal" data-violation-id="{{ violation.id }}">
                                         <i class="bi bi-pencil"></i> 
                                     </button>
                                     <a href="/get-files/?violation_id={{violation.id}}">
@@ -187,6 +210,15 @@
                                 ordering: true
                             });
                         }
+                    });
+                </script>
+                <script>
+                    $('#editStudentMinorViolationModal').on('show.bs.modal', function (event) {
+                        var button = $(event.relatedTarget);  // Button that triggered the modal
+                        var violationId = button.data('violation-id');  // Extract violation ID from data-* attribute
+                
+                        var modal = $(this);
+                        modal.find('#modalMinorViolationId').val(violationId);  // Set the violation ID in the hidden input field
                     });
                 </script>
             {%else%}
@@ -254,5 +286,60 @@
         </div>
     </div>
     {% comment %} set the scripts here {% endcomment %}
+    <!-- EDIT MODAL PART -->
+    <div class="modal fade" id="editStudentMajorViolationModal" tabindex="-1" role="dialog" aria-labelledby="editStudentMajorViolationModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editStudentMajorViolationModalTitle"> Edit Major Violation Record </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/edit-student-violation/" method="post" class="from-group" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="violation_id" id="modalMajorViolationId">
+                        <input type="hidden" name="student_id" value={{student.id}}>
 
+                        {{ major_form|crispy }}
+                        <input type="file" name="files" multiple>  <!-- Enable multiple file upload -->
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add Violation Record</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editStudentMinorViolationModal" tabindex="-1" role="dialog" aria-labelledby="editStudentMinorViolationModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editStudentMinorViolationModalTitle"> Edit Minor Violation Record </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/edit-student-violation/" method="post" class="from-group" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="student_id" value={{student.id}}>
+                        <input type="hidden" name="violation_id" id="modalMinorViolationId">
+
+                        {{ minor_form|crispy }}
+                        <input type="file" name="files" multiple>  <!-- Enable multiple file upload -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add Violation Record</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% comment %} set the scripts here {% endcomment %}
 {%endblock%}

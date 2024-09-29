@@ -159,3 +159,40 @@ def add_violation(request):
             record.save()
             messages.add_message(request, messages.SUCCESS, "Added a violation record.")
             return HttpResponseRedirect('/violations/')
+        
+def toggle_pending(request):
+    if(request.method == "POST"):
+        violation_id = request.POST.get("violation_id")
+        student_id = request.POST.get("student_id")
+        try: 
+            violation_record = StudentViolation.objects.get(id=violation_id)
+        except StudentViolation.DoesNotExist:
+            messages.add_message(request, messages.ERROR, "Record does not exist.")
+            return HttpResponseRedirect(f'/view_student/?student_id={student_id}')
+        violation_record.status = not violation_record.status
+        violation_record.save()
+        messages.add_message(request, messages.ERROR, "Record updated.")
+        return HttpResponseRedirect(f'/view_student/?student_id={student_id}')
+
+@login_required
+def edit_student_violation(request):
+    if request.method == "POST":
+        violation_id = request.POST.get("violation_id")
+        student_id = request.POST.get("student_id")
+        
+        try:
+            # Fetch the violation by ID
+            violation = StudentViolation.objects.get(id=violation_id)
+        except StudentViolation.DoesNotExist:
+            messages.error(request, "Violation does not exist.")
+            return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
+        
+        # Process the form with the violation instance
+        form = StudentViolationForm(request.POST, instance=violation)
+        if form.is_valid():
+            form.save()  # Save the updated violation data
+            messages.success(request, "Violation updated successfully.")
+        else:
+            messages.error(request, "Failed to update violation.")
+        
+        return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
