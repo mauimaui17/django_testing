@@ -177,6 +177,7 @@ def toggle_pending(request):
 @login_required
 def edit_student_violation(request):
     if request.method == "POST":
+        files = request.FILES.getlist('files')  # Get the uploaded files
         violation_id = request.POST.get("violation_id")
         student_id = request.POST.get("student_id")
         
@@ -190,7 +191,12 @@ def edit_student_violation(request):
         # Process the form with the violation instance
         form = StudentViolationForm(request.POST, instance=violation)
         if form.is_valid():
-            form.save()  # Save the updated violation data
+            form.save(commit=False)  # Save the updated violation data
+            current_time = datetime.now()
+            form.time = current_time
+            form.save()
+            for file in files:
+                StudentViolationFile.objects.create(student_violation=form, file=file)
             messages.success(request, "Violation updated successfully.")
         else:
             messages.error(request, "Failed to update violation.")
