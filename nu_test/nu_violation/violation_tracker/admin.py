@@ -4,4 +4,4 @@ from .models import *
 admin.site.register(Student)
 admin.site.register(Violation)
 admin.site.register(StudentViolation)
-
+admin.site.register(StudentViolationFile)
