@@ -168,11 +168,11 @@ def toggle_pending(request):
             violation_record = StudentViolation.objects.get(id=violation_id)
         except StudentViolation.DoesNotExist:
             messages.add_message(request, messages.ERROR, "Record does not exist.")
-            return HttpResponseRedirect(f'/view_student/?student_id={student_id}')
+            return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
         violation_record.status = not violation_record.status
         violation_record.save()
         messages.add_message(request, messages.ERROR, "Record updated.")
-        return HttpResponseRedirect(f'/view_student/?student_id={student_id}')
+        return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
 
 @login_required
 def edit_student_violation(request):
