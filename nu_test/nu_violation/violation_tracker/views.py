@@ -171,7 +171,7 @@ def toggle_pending(request):
             return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
         violation_record.status = not violation_record.status
         violation_record.save()
-        messages.add_message(request, messages.ERROR, "Record updated.")
+        messages.add_message(request, messages.SUCCESS, "Record updated.")
         return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
 
 @login_required

@@ -72,7 +72,7 @@
                                         <input type="hidden" name="violation_id" value="{{violation.id}}">
                                         <input type="hidden" name="student_id" value="{{student.id}}">
 
-                                        {% if violation.status %}
+                                        {% if not violation.status %}
                                             <button class="btn btn-danger" type="submit">
                                                 <i class="bi bi-x-lg"></i> 
                                             </button>
@@ -178,7 +178,7 @@
                                         <input type="hidden" name="student_id" value="{{student.id}}">
 
 
-                                        {% if violation.status %}
+                                        {% if not violation.status %}
                                             <button class="btn btn-danger" type="submit">
                                                 <i class="bi bi-x-lg"></i> 
                                             </button>
