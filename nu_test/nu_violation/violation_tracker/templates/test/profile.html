@@ -113,7 +113,8 @@
                     $('#editStudentMajorViolationModal').on('show.bs.modal', function (event) {
                         var button = $(event.relatedTarget);  // Button that triggered the modal
                         var violationId = button.data('violation-id');  // Extract violation ID from data-* attribute
-                
+                        console.log("Violation ID:", violationId);  // Debugging statement to check if violationId is correct
+
                         var modal = $(this);
                         modal.find('#modalMajorViolationId').val(violationId);  // Set the violation ID in the hidden input field
                     });
@@ -157,7 +158,7 @@
                     </thead>
                     <tbody>
                         {%for violation in minor%}
-                            <tr data-id="{{ violation.id }}" data-violation="{{ violation.violation.id }}" data-category="{{ violation.category }}" data-status="{{ violation.status }}" data-remarks="{{ violation.remarks }}">
+                            <tr data-id="{{ violation.id }}">
                                 <td class="text-center"> {{violation.violation.title}} </td>
                                 <td class="text-center"> Level {{violation.category}}</td>
                                 <td class="text-center"> {{violation.offense_count}}</td>
@@ -216,7 +217,7 @@
                     $('#editStudentMinorViolationModal').on('show.bs.modal', function (event) {
                         var button = $(event.relatedTarget);  // Button that triggered the modal
                         var violationId = button.data('violation-id');  // Extract violation ID from data-* attribute
-                
+                        
                         var modal = $(this);
                         modal.find('#modalMinorViolationId').val(violationId);  // Set the violation ID in the hidden input field
                     });
@@ -306,7 +307,7 @@
                         <input type="file" name="files" multiple>  <!-- Enable multiple file upload -->
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Add Violation Record</button>
+                            <button type="submit" class="btn btn-primary">Edit Violation Record</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </form>
@@ -333,7 +334,7 @@
                         {{ minor_form|crispy }}
                         <input type="file" name="files" multiple>  <!-- Enable multiple file upload -->
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Add Violation Record</button>
+                            <button type="submit" class="btn btn-primary">Edit Violation Record</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </form>
