@@ -108,7 +108,7 @@
                         }
                     });
                 </script>
-                <script>
+                {% comment %} <script>
                     // Listen for the modal being shown and set the violation ID
                     $('#editStudentMajorViolationModal').on('show.bs.modal', function (event) {
                         var button = $(event.relatedTarget);  // Button that triggered the modal
@@ -118,7 +118,7 @@
                         var modal = $(this);
                         modal.find('#modalMajorViolationId').val(violationId);  // Set the violation ID in the hidden input field
                     });
-                </script>
+                </script> {% endcomment %}
             {%else%}
                 <h3>Major Violations</h3>
                  <div class="container d-flex flex-column justify-content-center align-items-center align-self-center">
@@ -213,7 +213,7 @@
                         }
                     });
                 </script>
-                <script>
+                {% comment %} <script>
                     $('#editStudentMinorViolationModal').on('show.bs.modal', function (event) {
                         var button = $(event.relatedTarget);  // Button that triggered the modal
                         var violationId = button.data('violation-id');  // Extract violation ID from data-* attribute
@@ -221,7 +221,7 @@
                         var modal = $(this);
                         modal.find('#modalMinorViolationId').val(violationId);  // Set the violation ID in the hidden input field
                     });
-                </script>
+                </script> {% endcomment %}
             {%else%}
                 <h3>Minor Violations</h3>
                  <div class="container d-flex flex-column justify-content-center align-items-center align-self-center">
@@ -343,4 +343,29 @@
         </div>
     </div>
     {% comment %} set the scripts here {% endcomment %}
+    <script>
+        $(document).ready(function() {
+            // Major Violation Modal
+            $('#editStudentMajorViolationModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);  // Button that triggered the modal
+                var violationId = button.data('violation-id');  // Extract violation ID from data-* attribute
+                
+                console.log("Major Violation ID:", violationId);  // Debugging statement
+                
+                var modal = $(this);
+                modal.find('#modalMajorViolationId').val(violationId);  // Set the violation ID in the hidden input field
+            });
+        
+            // Minor Violation Modal
+            $('#editStudentMinorViolationModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);  // Button that triggered the modal
+                var violationId = button.data('violation-id');  // Extract violation ID from data-* attribute
+                
+                console.log("Minor Violation ID:", violationId);  // Debugging statement
+                
+                var modal = $(this);
+                modal.find('#modalMinorViolationId').val(violationId);  // Set the violation ID in the hidden input field
+            });
+        });
+    </script>
 {%endblock%}
