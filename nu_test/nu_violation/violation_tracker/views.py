@@ -136,6 +136,7 @@ def download_violation_files(request):
         messages.add_message(request, messages.ERROR, "No files attached to record.")
         return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
 
+@login_required
 def view_violations(request):
     major = Violation.objects.all().filter(violation_class__exact="Major")
     minor = Violation.objects.all().filter(violation_class__exact="Minor")
@@ -145,7 +146,8 @@ def view_violations(request):
         "minor": minor,
         "form": form
     })
-    
+
+@login_required
 def add_violation(request):
     if(request.method == "POST"):
         form = ViolationForm(request.POST)
@@ -159,7 +161,8 @@ def add_violation(request):
             record.save()
             messages.add_message(request, messages.SUCCESS, "Added a violation record.")
             return HttpResponseRedirect('/violations/')
-        
+
+@login_required   
 def toggle_pending(request):
     if(request.method == "POST"):
         violation_id = request.POST.get("violation_id")
