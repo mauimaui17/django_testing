@@ -52,11 +52,7 @@ class Student(models.Model):
     )
     GRADE_LEVEL_CHOICES = [
         ("SHS11", "Grade 11"),
-        ("SHS12", "Grade 12"),
-        ("COLG1", "First Year College"),
-        ("COLG2", "Second Year College"),
-        ("COLG3", "Third Year College"),
-        ("COLG4", "Fourth Year College")
+        ("SHS12", "Grade 12")
         ]
 
     grade_level = models.CharField(
