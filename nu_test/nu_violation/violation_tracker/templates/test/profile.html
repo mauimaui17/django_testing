@@ -59,7 +59,7 @@
                                 <td class="text-center"> {{violation.offense_count}}</td>
                                 <td class="text-center"> {{violation.remarks}}</td>
                                 <td class="text-center"> {{violation.time}}</td>
-                                {% if violation.status %}
+                                {% if not violation.status %}
                                     <td class="text-center"> Pending</td>
                                 {% else %}
                                 <td class="text-center"> Resolved </td>
@@ -167,7 +167,7 @@
                                 <td class="text-center"> {{violation.offense_count}}</td>
                                 <td class="text-center"> {{violation.remarks}}</td>
                                 <td class="text-center"> {{violation.time}}</td>
-                                {% if violation.status %}
+                                {% if not violation.status %}
                                     <td class="text-center"> Pending</td>
                                 {% else %}
                                 <td class="text-center"> Resolved </td>
