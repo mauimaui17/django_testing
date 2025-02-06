@@ -62,13 +62,14 @@ class Student(models.Model):
     )
     STRAND_CHOICES = [
         ("ABM", "ABM"),
-        ("STEM", "STEM"),
-        ("HUMSS", "HUMSS")        
+        ("HUMSS", "HUMSS"),
+        ("STEM", "STEM")
         ]
     strand = models.CharField(
         max_length=200, 
         choices=STRAND_CHOICES, 
-        blank=False
+        blank=False,
+        default=STRAND_CHOICES[0][0]
     )
     lates = models.IntegerField(default=0)
     absences = models.IntegerField(default=0)
