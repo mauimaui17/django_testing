@@ -1,0 +1,6 @@
+{%extends 'test/base.html'%}
+
+{% block content %}
+{% load static %}
+<embed class="pdf" src= "{% static '/handbook.png' %}" width="800" height="500">
+{% endblock content %}
