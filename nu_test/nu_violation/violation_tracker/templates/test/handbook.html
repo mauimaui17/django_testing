@@ -3,9 +3,9 @@
 
 {% block content %}
 <h1>Handbook</h1>
-
-<div class="embed-responsive embed-responsive-16by9">
-    <embed class="pdf" type="application/pdf" src= "{% static 'handbook.pdf' %}">
+<div class="d-flex align-items-center justify-content-center pt-5">
+    <div class="embed-responsive embed-responsive-21by9">
+        <embed class="pdf" type="application/pdf" src= "{% static 'handbook.pdf' %}">
+    </div>
 </div>
-
 {% endblock content %}
