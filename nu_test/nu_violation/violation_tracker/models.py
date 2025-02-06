@@ -4,7 +4,7 @@ from datetime import datetime
 import random
 import os
 from uuid import uuid4
-
+from django.utils import timezone
 # Create your models here.
 
 class Violation(models.Model):
@@ -110,7 +110,7 @@ class StudentViolation(models.Model):
     )
     remarks = models.CharField(blank=True)
     status = models.BooleanField(default=False)
-    time = models.DateTimeField(blank=True, default=datetime.now())
+    time = models.DateTimeField(blank=True, default=timezone.now())
     def __str__(self):
         return f"{self.student} - {self.violation}"
 
