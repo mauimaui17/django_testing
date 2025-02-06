@@ -2,5 +2,8 @@
 {% load static %}
 
 {% block content %}
+<div class="d-flex align-items-center justify-content-center pt-5">
+<h1>Handbook</h1>
 <embed class="pdf" type="application/pdf" src= "{% static 'handbook.pdf' %}" width="800" height="500">
+</div>
 {% endblock content %}
