@@ -60,7 +60,18 @@ class Student(models.Model):
         choices=GRADE_LEVEL_CHOICES, 
         blank=False
     )
-    
+    STRAND_CHOICES = [
+        ("ABM", "ABM"),
+        ("STEM", "STEM"),
+        ("HUMSS", "HUMSS")        
+        ]
+    strand = models.CharField(
+        max_length=200, 
+        choices=STRAND_CHOICES, 
+        blank=False
+    )
+    lates = models.IntegerField(default=0)
+    absences = models.IntegerField(default=0)
     def __str__(self):
         return f"{self.last_name}, {self.first_name}"
     def get_minor_count(self):

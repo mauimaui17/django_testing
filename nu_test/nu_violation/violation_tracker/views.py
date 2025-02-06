@@ -14,7 +14,8 @@ def homepage(request):
     return render(request, "test/home.html")
 def base(request):
     return render(request, "test/base.html")
-
+def handbook(request):
+    return render(request, "test/handbook.html")
 @login_required
 def students(request):
     all_students = Student.objects.all()
