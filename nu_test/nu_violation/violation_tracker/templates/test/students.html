@@ -19,8 +19,11 @@
                 <tr>
                     <th class="text-center" rowspan="2"> Name </th>
                     <!-- <th class="text-center" rowspan="2"> First Name</th> -->
-                    <th class="text-center" rowspan="2"> Student ID </th>
-                    <th class="text-center" rowspan="2"> Grade Level </th>
+                    <th class="text-center" rowspan="1"> Student ID </th>
+                    <th class="text-center" rowspan="1"> Grade Level </th>
+                    <th class="text-center" rowspan="1"> Strand </th>
+                    <th class="text-center" rowspan="1"> Lates </th>
+                    <th class="text-center" rowspan="1"> Absences </th>
                     <th class="text-center" colspan="2"> Violations </th>
                 </tr>
                 <tr>
@@ -34,6 +37,10 @@
                         <td class="text-center"> <a href="{% url 'view-student' %}?student_id={{ student.id }}">{{student.last_name}}, {{student.first_name}}</a></td>
                         <td class="text-center"> {{student.student_id}}</td>
                         <td class="text-center"> {{student.get_grade_level_display}}</td>
+                        <td class="text-center"> {{student.strand}}</td>
+                        <td class="text-center"> {{student.lates}}</td>
+                        <td class="text-center"> {{student.absences}}</td>
+
                         <td class="text-center">
                             {{student.get_minor_count|default:"No minor violations."}}
                         </td>
