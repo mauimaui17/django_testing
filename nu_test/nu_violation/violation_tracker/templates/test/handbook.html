@@ -1,11 +1,17 @@
-{%extends 'test/base.html'%}
+{% extends 'test/base.html' %}
 {% load static %}
 
 {% block content %}
-<h1>Handbook</h1>
-<div class="container-flex align-items-center justify-content-center">
-    <div class="embed-responsive">
-        <embed class="pdf" type="application/pdf" src= "{% static 'handbook.pdf' %}" width="100%" height="800px">
+<h1 class="text-center my-4">Handbook</h1>
+
+<div class="container d-flex justify-content-center">
+    <div class="ratio ratio-4x3 w-100" style="max-width: 900px;">
+        <iframe src="{% static 'handbook.pdf' %}" type="application/pdf" class="border rounded shadow-sm"></iframe>
     </div>
+</div>
+
+<!-- Fallback for mobile devices -->
+<div class="text-center d-md-none mt-3">
+    <a href="{% static 'handbook.pdf' %}" target="_blank" class="btn btn-primary">Open PDF in New Tab</a>
 </div>
 {% endblock content %}
