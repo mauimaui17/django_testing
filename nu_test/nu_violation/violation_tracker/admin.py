@@ -5,3 +5,5 @@ admin.site.register(Student)
 admin.site.register(Violation)
 admin.site.register(StudentViolation)
 admin.site.register(StudentViolationFile)
+admin.site.register(TardinessRecord)
+
