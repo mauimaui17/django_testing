@@ -36,8 +36,8 @@
         <div class="container shadow-lg p-3 mb-5 bg-white rounded">
             {% if tardies %}
             <div class='row'>
-                <div class='col-10'>
-                    <h3>Major Violations</h3>
+                <div class='col-5'>
+                    <h3>Attendance Record</h3>
                 </div>
                 <div class="col">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAbsentModal">
@@ -363,7 +363,7 @@
                         <input type="hidden" name="tardiness_class" value="ABSENT">
                         Date and Time: <input type="datetime-local" name="time">  <!-- Enable multiple file upload -->
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Add Late Record</button>
+                            <button type="submit" class="btn btn-primary">Add Absence Record</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </form>
