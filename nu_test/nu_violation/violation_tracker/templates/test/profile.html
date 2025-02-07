@@ -16,7 +16,7 @@
                     <b>Student ID:</b> {{student.student_id}}
                 </div>
                 <div class="col-md-4">
-                    <b>Lates:</b> {{student.lates}}
+                    <b>Lates:</b> {{student.get_lates_count}}
                 </div>
             </div>
             <div class="row">
@@ -24,7 +24,7 @@
                     <b>Year Level:</b> {{student.get_grade_level_display}}
                 </div>
                 <div class="col-md-4">
-                    <b>Absences:</b> {{student.absences}}
+                    <b>Absences:</b> {{student.get_absences_count}}
                 </div>
             </div>
             <div class="row">

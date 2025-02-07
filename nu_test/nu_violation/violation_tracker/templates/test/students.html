@@ -38,8 +38,8 @@
                         <td class="text-center"> {{student.student_id}}</td>
                         <td class="text-center"> {{student.get_grade_level_display}}</td>
                         <td class="text-center"> {{student.strand}}</td>
-                        <td class="text-center"> {{student.lates}}</td>
-                        <td class="text-center"> {{student.absences}}</td>
+                        <td class="text-center"> {{student.get_lates_count}}</td>
+                        <td class="text-center"> {{student.get_absences_count}}</td>
 
                         <td class="text-center">
                             {{student.get_minor_count|default:"No minor violations."}}

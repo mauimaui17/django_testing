@@ -85,7 +85,10 @@ class Student(models.Model):
         return self.violations.all().filter(violation__violation_class="Major")
     def get_tardiness(self):
         return self.tardiness.all()
-
+    def get_lates_count(self):
+        return self.tardiness.filter(tardiness_class = "LATE").count()
+    def get_absences_count(self):
+        return self.tardiness.filter(tardiness_class = "ABSENT").count()
 class StudentViolation(models.Model):
     student = models.ForeignKey(
         Student, 
