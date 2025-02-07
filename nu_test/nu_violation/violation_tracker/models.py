@@ -127,7 +127,12 @@ class StudentViolationFile(models.Model):
     def __str__(self):
         return f"File for {self.student_violation}"
 
-class Tardiness(models.Model):
+class TardinessRecord(models.Model):
+    student = models.ForeignKey(
+        Student, 
+        on_delete=models.CASCADE, 
+        related_name="tardiness"
+    )
     TARDINESS_TYPE = [        
         ("LATE", "Late"),
         ("ABSENT", "Absent")]
@@ -139,17 +144,6 @@ class Tardiness(models.Model):
     )
     def __str__(self):
         return self.tardiness_class
-
-class TardinessRecord(models.Model):
-    student = models.ForeignKey(
-        Student, 
-        on_delete=models.CASCADE, 
-        related_name="tardiness"
-    )
-    tardiness = models.ForeignKey(
-        Tardiness,        
-        on_delete=models.CASCADE
-    )
     time = models.DateTimeField(blank=False, default=timezone.now)
     def __str__(self):
         return f"{self.student} - {self.tardiness}"
