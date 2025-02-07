@@ -50,15 +50,15 @@
             <div class="container d-flex flex-column justify-content-center align-items-center align-self-center">
                <h1 class="align-self-center"> No Tardiness or Absences</h1>
                <div class="col">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentMajorViolationModal">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAbsentModal">
                     Add an Absence Record
                 </button>
             </div>
             <div class="col">
-                <p>or</p>
+                or
             </div>
             <div class="col">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentMajorViolationModal">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLateModal">
                     Add a Tardiness Record
                 </button>
             </div>
@@ -287,6 +287,56 @@
 
     {% comment %} add the modal here {% endcomment %}
     <!-- MODAL PART -->
+    <div class="modal fade" id="addLate" tabindex="-1" role="dialog" aria-labelledby="addLateModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addLateModalTitle"> Add Late Record </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/add-late-record/" method="post" class="from-group" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="student_id" value={{student.id}}>
+                        <input type="hidden" name="tardiness_class" value="LATE">
+                        Date and Time: <input type="datetime-local" name="time">  <!-- Enable multiple file upload -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add Late Record</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addAbsent" tabindex="-1" role="dialog" aria-labelledby="addAbsentModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAbsentModalTitle"> Add Absence Record </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/add-absent-record/" method="post" class="from-group" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="student_id" value={{student.id}}>
+                        <input type="hidden" name="tardiness_class" value="ABSENT">
+                        Date and Time: <input type="datetime-local" name="time">  <!-- Enable multiple file upload -->
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add Late Record</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="addStudentMajorViolationModal" tabindex="-1" role="dialog" aria-labelledby="addStudentMajorViolationModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
