@@ -48,6 +48,21 @@
                         <td class="text-center">  {{tardy.time}}</td>
                         {% endfor %}
                     </tbody>
+                </table>
+                <script>
+                    $(document).ready(function() {
+                        if ($('#tardies').length) {
+                            $('#tardies').DataTable({
+                                responsive: true,
+                                paging: true,
+                                searching: true,
+                                ordering: true,
+                                lengthMenu: [5, 10, 15, 20]
+
+                            });
+                        }
+                    });
+                </script>
             {% else %}
             <h3>Attendance Record</h3>
             <div class="container d-flex flex-column justify-content-center align-items-center align-self-center">
@@ -290,7 +305,7 @@
 
     {% comment %} add the modal here {% endcomment %}
     <!-- MODAL PART -->
-    <div class="modal fade" id="addLate" tabindex="-1" role="dialog" aria-labelledby="addLateModal" aria-hidden="true">
+    <div class="modal fade" id="addLateModal" tabindex="-1" role="dialog" aria-labelledby="addLateModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -315,7 +330,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="addAbsent" tabindex="-1" role="dialog" aria-labelledby="addAbsentModal" aria-hidden="true">
+    <div class="modal fade" id="addAbsentModal" tabindex="-1" role="dialog" aria-labelledby="addAbsentModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
