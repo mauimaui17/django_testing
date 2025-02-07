@@ -217,7 +217,24 @@ def delete_violation(request):
 
     else:
         return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
-        
+
+@login_required
+def delete_violation(request):
+    if(request.method == "POST"):
+        tardy_id = request.POST.get("tardy_id")
+        student_id = request.POST.get("student_id")
+        try: 
+            tardiness_record = TardinessRecord.objects.get(id=tardy_id)
+        except StudentViolation.DoesNotExist:
+            messages.add_message(request, messages.ERROR, "Record does not exist.")
+            return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
+        tardiness_record.delete()
+        messages.add_message(request, messages.SUCCESS, "Successfully deleted tardiness/absence record.")
+        return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
+
+    else:
+        return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
+            
 @login_required
 def edit_student_violation(request):
     if request.method == "POST":
