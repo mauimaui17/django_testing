@@ -17,5 +17,6 @@ urlpatterns = [
     path("edit-student-violation/", views.edit_student_violation, name="edit-student-violation"),
     path("add-tardy-record/", views.add_tardiness, name="add-tardy-record"),
     path("delete_violation/", views.delete_violation, name="delete_violation"),
+    path("delete_tardy/", views.delete_tardy, name="delete_tardy"),
 
 ]

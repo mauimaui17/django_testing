@@ -219,7 +219,7 @@ def delete_violation(request):
         return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
 
 @login_required
-def delete_violation(request):
+def delete_tardy(request):
     if(request.method == "POST"):
         tardy_id = request.POST.get("tardy_id")
         student_id = request.POST.get("student_id")
