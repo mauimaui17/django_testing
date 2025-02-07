@@ -15,10 +15,21 @@
                 <div class="col-md-4">
                     <b>Student ID:</b> {{student.student_id}}
                 </div>
+                <div class="col-md-4">
+                    <b>Lates:</b> {{student.lates}}
+                </div>
             </div>
             <div class="row">
                 <div class="col">
                     <b>Year Level:</b> {{student.get_grade_level_display}}
+                </div>
+                <div class="col-md-4">
+                    <b>Absences:</b> {{student.absences}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <b>Strand:</b> {{student.strand}}
                 </div>
             </div>
         </div>
