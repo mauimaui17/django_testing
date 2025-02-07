@@ -201,7 +201,23 @@ def toggle_pending(request):
         violation_record.save()
         messages.add_message(request, messages.SUCCESS, "Record updated.")
         return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
+@login_required
+def delete_violation(request):
+    if(request.method == "POST"):
+        violation_id = request.POST.get("violation_id")
+        student_id = request.POST.get("student_id")
+        try: 
+            violation_record = StudentViolation.objects.get(id=violation_id)
+        except StudentViolation.DoesNotExist:
+            messages.add_message(request, messages.ERROR, "Record does not exist.")
+            return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
+        violation_record.delete()
+        messages.add_message(request, messages.SUCCESS, "Successfully deleted violation record.")
+        return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
 
+    else:
+        return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
+        
 @login_required
 def edit_student_violation(request):
     if request.method == "POST":
