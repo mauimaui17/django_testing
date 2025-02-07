@@ -59,8 +59,10 @@
                     </thead>
                     <tbody>
                         {%for tardy in tardies%}
-                        <td class="text-center"> {{tardy.tardiness_class}} </td>
-                        <td class="text-center">  {{tardy.time}}</td>
+                        <tr>
+                            <td class="text-center"> {{tardy.tardiness_class}} </td>
+                            <td class="text-center">  {{tardy.time}}</td>
+                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>
