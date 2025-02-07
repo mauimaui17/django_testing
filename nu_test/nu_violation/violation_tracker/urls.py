@@ -15,5 +15,6 @@ urlpatterns = [
     path("add-violation/", views.add_violation, name="add-violation"),
     path("toggle-pending/", views.toggle_pending, name="toggle-pending"),
     path("edit-student-violation/", views.edit_student_violation, name="edit-student-violation"),
-    
+    path("add-tardy-record/", views.add_tardiness, name="add-tardy-record"),
+
 ]

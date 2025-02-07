@@ -83,7 +83,8 @@ class Student(models.Model):
         return self.violations.all().filter(violation__violation_class="Minor")
     def get_major_violations(self):
         return self.violations.all().filter(violation__violation_class="Major")
-
+    def get_tardiness(self):
+        return self.tardiness.all()
 
 class StudentViolation(models.Model):
     student = models.ForeignKey(
@@ -142,9 +143,9 @@ class TardinessRecord(models.Model):
         blank=False,
         default=TARDINESS_TYPE[0][0]
     )
-    def __str__(self):
-        return self.tardiness_class
     time = models.DateTimeField(blank=False, default=timezone.now)
+    
     def __str__(self):
-        return f"{self.student} - {self.tardiness}"
+        return (self.tardiness_class, self.time)
+
 

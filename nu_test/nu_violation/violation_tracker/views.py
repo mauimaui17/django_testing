@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, HttpResponse
-from .models import Student, Violation, StudentViolation
+from .models import Student, Violation, StudentViolation, TardinessRecord
 from .forms import StudentForm, StudentViolationForm, StudentViolationFile, ViolationForm
 from django.contrib import messages
 from datetime import datetime
@@ -59,6 +59,7 @@ def view_student(request):
     major_form = StudentViolationForm()
     major_form.fields["violation"].queryset = Violation.objects.all().filter(violation_class__exact = "Major")
 
+    tardy_records = student.get_tardiness()
     return render(
         request, 
         'test/profile.html', 
@@ -66,6 +67,7 @@ def view_student(request):
             "student":student, 
             "minor": minor_violations, 
             "major": major_violations,
+            "tardies": tardy_records,
             "minor_form": minor_form,
             "major_form": major_form
         }
@@ -163,6 +165,27 @@ def add_violation(request):
             messages.add_message(request, messages.SUCCESS, "Added a violation record.")
             return HttpResponseRedirect('/violations/')
 
+@login_required
+def add_tardiness(request):
+    if(request.method == "POST"):
+        student_id = request.POST.get('student_id')
+        tardiness_class = request.POST.get('tardiness_class')
+        time_str = request.POST.get('time')
+        time_obj = datetime.strptime(time_str, "%Y-%m-%dT%H:%M")
+        try:
+            # Fetch the student by ID
+            student = Student.objects.get(id=student_id)
+        except Student.DoesNotExist:
+            messages.add_message(request, messages.ERROR, "Student does not exist.")
+            return HttpResponseRedirect('/students/')
+        TardinessRecord.objects.create(student= student, tardiness_class = tardiness_class, time = time_obj)
+        if tardiness_class == "ABSENT":
+            student.absences +=1
+        else:
+            student.lates +=1
+        return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
+
+    
 @login_required   
 def toggle_pending(request):
     if(request.method == "POST"):

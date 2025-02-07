@@ -43,7 +43,9 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        {%for tardy in tardies%}
+                        <td class="text-center"> {{tardy.tardiness_class}} </td>
+                        <td class="text-center">  {{tardy.time}}</td>
                     </tbody>
             {% else %}
             <h3>Attendance Record</h3>
@@ -297,7 +299,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="/add-late-record/" method="post" class="from-group" enctype="multipart/form-data">
+                    <form action="/add-tardy-record/" method="post" class="from-group" enctype="multipart/form-data">
                         {% csrf_token %}
                         <input type="hidden" name="student_id" value={{student.id}}>
                         <input type="hidden" name="tardiness_class" value="LATE">
@@ -322,7 +324,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="/add-absent-record/" method="post" class="from-group" enctype="multipart/form-data">
+                    <form action="/add-tardy-record/" method="post" class="from-group" enctype="multipart/form-data">
                         {% csrf_token %}
                         <input type="hidden" name="student_id" value={{student.id}}>
                         <input type="hidden" name="tardiness_class" value="ABSENT">
