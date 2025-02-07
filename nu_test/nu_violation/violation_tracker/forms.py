@@ -9,14 +9,17 @@ class StudentForm(forms.ModelForm):
             "last_name",
             "student_id",
             "enrollment_year",
-            "grade_level"
+            "grade_level",
+            "strand"
         ]
         labels = {            
             "first_name": "First Name",
             "last_name": "Last Name",
             "student_id":"Student ID",
             "enrollment_year":"Enrollment Year",
-            "grade_level":"Grade Level"}
+            "grade_level":"Grade Level",
+            "strand":"Strand",
+            }
             
 class StudentViolationForm(forms.ModelForm):
     class Meta:
