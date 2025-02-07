@@ -126,3 +126,21 @@ class StudentViolationFile(models.Model):
 
     def __str__(self):
         return f"File for {self.student_violation}"
+    
+class TardinessRecord(models.Model):
+    student = models.ForeignKey(
+        Student, 
+        on_delete=models.CASCADE, 
+        related_name="violations"
+    )
+    TARDINESS_TYPE = [        
+        ("LATE", "Late"),
+        ("ABSENT", "Absent")]
+    tardiness_class = models.CharField(
+        max_length=200, 
+        choices=TARDINESS_TYPE, 
+        blank=False,
+        default=TARDINESS_TYPE[0][0]
+    )
+    time = models.DateTimeField(blank=False, default=timezone.now)
+
