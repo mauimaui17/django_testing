@@ -183,6 +183,7 @@ def add_tardiness(request):
             student.absences +=1
         else:
             student.lates +=1
+        student.save()
         return HttpResponseRedirect(f'/view-student/?student_id={student_id}')
 
     
