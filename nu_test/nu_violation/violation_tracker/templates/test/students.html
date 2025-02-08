@@ -90,7 +90,15 @@
             paging: true,
             searching: true,
             ordering: true,
-            lengthMenu: [5, 10, 15, 20]
+            lengthMenu: [5, 10, 15, 20],
+            dom: 'Plfrtip', // Enables SearchPanes along with other controls
+            searchPanes: {
+                cascadePanes: true,  // Optional: enables cascading filters
+            },
+            columnDefs: [
+                { searchPanes: { show: false }, targets: [0, 1, 4, 5, 6, 7] }, // Disable SearchPanes for these columns
+                { searchPanes: { show: true }, targets: [2, 3] }               // ✅ Enable for Grade Level & Strand
+            ]
         });
     });
 </script>
