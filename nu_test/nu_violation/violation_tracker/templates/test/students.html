@@ -91,9 +91,14 @@
             searching: true,
             ordering: true,
             lengthMenu: [5, 10, 15, 20],
-            layout: {
-                top1: 'searchPanes'
-            }
+            dom: 'Plfrtip',
+            searchPanes: {
+                cascadePanes: true
+            },
+            columnDefs: [
+                { targets: [2, 3], searchPanes: { show: true } },   // ✅ Enable for Grade Level & Strand
+                { targets: "_all", searchPanes: { show: false } } // ❌ Disable for other columns
+            ]
         });
     });
 </script>
