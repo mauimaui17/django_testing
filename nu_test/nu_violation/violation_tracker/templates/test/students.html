@@ -91,13 +91,13 @@
             searching: true,
             ordering: true,
             lengthMenu: [5, 10, 15, 20],
-            dom: 'Plfrtip', // Enables SearchPanes along with other controls
+            dom: 'Plfrtip',
             searchPanes: {
-                cascadePanes: true,  // Optional: enables cascading filters
+                cascadePanes: true
             },
             columnDefs: [
-                { searchPanes: { show: false }, targets: [0, 1, 4, 5, 6, 7] }, // Disable SearchPanes for these columns
-                { searchPanes: { show: true }, targets: [2, 3] }               // ✅ Enable for Grade Level & Strand
+                { targets: [2, 3], searchPanes: { show: true } },   // ✅ Enable for Grade Level & Strand
+                { targets: [0, 1, 4, 5, 6, 7], searchPanes: { show: false } } // ❌ Disable for other columns
             ]
         });
     });
