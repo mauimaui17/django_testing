@@ -22,6 +22,14 @@ class StudentForm(forms.ModelForm):
             }
             
 class StudentViolationForm(forms.ModelForm):
+    CATEGORY_CHOICES = [
+        (1, 'Category 1'),
+        (2, 'Category 2'),
+        (3, 'Category 3'),
+    ]
+    
+    category = forms.ChoiceField(choices=CATEGORY_CHOICES, label="Category/Intervention")
+
     class Meta:
         model = StudentViolation
         fields = [
