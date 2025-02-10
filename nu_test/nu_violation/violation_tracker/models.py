@@ -109,7 +109,7 @@ class StudentViolation(models.Model):
     category = models.IntegerField(
         default=1, 
         validators=[
-            MaxValueValidator(3), 
+            MaxValueValidator(5), 
             MinValueValidator(1)
         ]
     )
