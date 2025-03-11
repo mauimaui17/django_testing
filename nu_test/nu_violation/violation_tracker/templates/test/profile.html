@@ -276,8 +276,7 @@
 
                                 {% endif %}
                                 <td class="text-center"> 
-                                    {% comment %} <div class="d-flex justify-content-around"> {% endcomment %}
-                                        <form action="/toggle-pending/" method="post" class="from-group" enctype="multipart/form-data">
+                                    <div class="d-flex justify-content-center gap-2 flex-wrap">                                        <form action="/toggle-pending/" method="post" class="from-group" enctype="multipart/form-data">
                                             {% csrf_token %}
 
                                             <input type="hidden" name="violation_id" value="{{violation.id}}">
@@ -311,6 +310,7 @@
                                             <i class="bi bi-trash-fill"></i>
                                         </button>
                                     </form>
+                                </div>
                                 </td>
                             </tr>
                         {%endfor%}
