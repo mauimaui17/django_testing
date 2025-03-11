@@ -157,7 +157,7 @@
 
                                     {% endif %}
                                     <td class="text-center">
-                                        {% comment %} <div class="d-flex justify-content-around"> {% endcomment %}
+                                        <div class="d-flex justify-content-center gap-2 flex-wrap">                                        <form action="/toggle-pending/" method="post" class="from-group" enctype="multipart/form-data">
                                             <form action="/toggle-pending/" method="post" class="from-group" enctype="multipart/form-data">
                                                 {% csrf_token %}
 
@@ -192,6 +192,7 @@
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </form>
+                                    </div>
                                     </td>
                                 </tr>
                             {%endfor%}
